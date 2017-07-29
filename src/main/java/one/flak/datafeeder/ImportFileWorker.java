@@ -1,11 +1,11 @@
-// Copyright (c) Stefan Botzenhart. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Licensed under the GNU GENERAL PUBLIC LICENSE Version 3.
+// See LICENSE file in the project root for full license information.
+
 package one.flak.datafeeder;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import one.flak.datafeeder.models.TripSample;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.ContentType;
@@ -15,8 +15,6 @@ import org.apache.http.impl.client.HttpClients;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ImportFileWorker {
 

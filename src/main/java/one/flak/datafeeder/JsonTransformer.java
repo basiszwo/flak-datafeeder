@@ -1,5 +1,6 @@
-// Copyright (c) Stefan Botzenhart. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Licensed under the GNU GENERAL PUBLIC LICENSE Version 3.
+// See LICENSE file in the project root for full license information.
+
 package one.flak.datafeeder;
 
 import com.google.gson.JsonObject;
@@ -15,9 +16,6 @@ public class JsonTransformer {
         obj.add("location", buildLocation(tripSample));
         obj.add("acceleration", buildAcceleration(tripSample));
         obj.addProperty("trip_id", tripSample.getTripId());
-//        obj.addProperty("trip_uuid",tripSample.getTripUuid());
-//        obj.addProperty("trip_uid", tripSample.getTripUid());
-//        obj.addProperty("vin", tripSample.getVin());
 
         return obj;
     }
