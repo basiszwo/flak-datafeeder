@@ -57,7 +57,7 @@ public class ImportFileWorker {
 
             if(count == batchSize) {
                 count = 0;
-//                makeApiRequest(tripSamples);
+                makeApiRequest(tripSamples);
                 System.out.println("Sending API Request with " + batchSize + " samples ...");
             }
         }

@@ -3,27 +3,46 @@
 
 package one.flak.datafeeder;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import org.apache.commons.io.FilenameUtils;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 public class Main {
 
     public static void main(String[] args) throws MalformedURLException, URISyntaxException {
-        String apiUrl = "http://api-1.flak.one/samples";
 
-        File inputFolder = new File("/Volumes/WD Ultra 2TB/trip-samples-csv");
+        if(args.length != 1) {
+            System.out.println("You have to provide a configuration file as argument");
+            System.exit(1);
+        }
+        Properties props = new Properties();
 
-        int startDate = Integer.parseInt("20170201");
-        int endDate = Integer.parseInt("20170228");
+        try(BufferedReader reader = Files.newBufferedReader(new File(args[0]).toPath())) {
+            props.load(reader);
+        } catch(IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        String apiUrl = props.getProperty("apiUrl");
+
+        int startDate = Integer.parseInt(props.getProperty("startDate"));
+        int endDate = Integer.parseInt(props.getProperty("endDate"));
+
+        File inputFolder = new File(props.getProperty("inputFolder"));
 
         List<File> csvFiles = Arrays.asList(inputFolder.listFiles())
                 .stream()
