@@ -44,35 +44,46 @@ public class Main {
 
         File inputFolder = new File(props.getProperty("inputFolder"));
 
-        List<File> csvFiles = Arrays.asList(inputFolder.listFiles())
+        List<File> directories = Arrays.asList(inputFolder.listFiles())
                 .stream()
                 .filter((e) -> {
-                    System.out.println("Processing file " + e.getAbsolutePath());
-
-                    if (e.getName().equals(".DS_Store")) {
+                    if(e.getName().equals(".DS_Store")) {
                         return false;
                     }
-
-                    System.out.println(FilenameUtils.getBaseName(e.getName()));
 
                     int fileDate = Integer.parseInt(FilenameUtils.getBaseName(e.getName()));
 
                     boolean isInRange = fileDate >= startDate && fileDate <= endDate;
-                    return !e.isDirectory() && isInRange;
+
+                    return isInRange && e.isDirectory();
                 })
                 .collect(Collectors.toList());
 
+
         URI apiURL = new URL(apiUrl).toURI();
 
-        csvFiles.parallelStream().forEach((f) -> {
-            TripSampleCSVReader tripSampleCSVReader = null;
 
-            try {
-                tripSampleCSVReader = new TripSampleCSVReader(f.toString());
-                new ImportFileWorker(f.toPath(), apiURL, new JsonTransformer(), tripSampleCSVReader).run();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        directories.parallelStream().forEach((dir) -> {
+            Arrays.asList(dir.listFiles()).parallelStream()
+                    .filter((file) -> {
+                        if(file.getName().equals(".DS_Store")) {
+                            return false;
+                        }
+
+                        return !file.isDirectory();
+                    })
+                    .forEach((f) -> {
+                        System.out.println("Processing file " + f.getAbsolutePath());
+
+                        TripSampleCSVReader tripSampleCSVReader = null;
+
+                        try {
+                            tripSampleCSVReader = new TripSampleCSVReader(f.toString());
+                            new ImportFileWorker(f.toPath(), apiURL, new JsonTransformer(), tripSampleCSVReader).run();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
         });
     }
 }

@@ -1,4 +1,4 @@
-apiUrl=http://my.base.url
-startDate=20170201
-endDate=20170228
-inputFolder=/Volumes/TripData/
+apiUrl=http://api-1.flak.one:4567/samples
+startDate=20170101
+endDate=20170110
+inputFolder=/mnt/volume-fra1-01/trip-samples/

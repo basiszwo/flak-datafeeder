@@ -45,10 +45,9 @@ public class ImportFileWorker {
 
     public void run() throws IOException {
         int count = 0;
+        JsonArray tripSamples = new JsonArray();
 
         while(csvReader.hasNext()) {
-            JsonArray tripSamples = new JsonArray();
-
             JsonObject tripSampleObject = this.jsonTransformer.transform(csvReader.next());
 
             tripSamples.add(tripSampleObject);
@@ -58,9 +57,11 @@ public class ImportFileWorker {
             if(count == batchSize) {
                 count = 0;
                 makeApiRequest(tripSamples);
+                tripSamples = new JsonArray();
                 System.out.println("Sending API Request with " + batchSize + " samples ...");
             }
         }
+
     }
 
     public void makeApiRequest(JsonElement tripSample) {

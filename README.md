@@ -9,3 +9,9 @@ Data feeder tool to read trip samples CSV data, transform each line to JSON and 
 ```
 mvn package
 ```
+
+## Run
+
+```
+java -jar datafeeder-1.0-SNAPSHOT-jar-with-dependencies.jar configuration.properties
+```
